@@ -3,7 +3,7 @@ syntax = "proto3";
 package protocol;
 
 message Record{
-    int64 date = 1;
+    string date = 1;
     string number = 2;
     float speed = 3;
 }
@@ -14,7 +14,7 @@ message EmptyResponse{
 
 }
 message ListingRequest{
-    int64 date = 1;
+    string date = 1;
     float speedLimit = 2;
 }
 message ListingResponse{
@@ -25,7 +25,7 @@ message GetMinMaxResponse{
     Record max = 2;
 }
 message GetMinMaxRequest{
-    int64 date = 1;
+    string date = 1;
 }
 
 service SpeedControlService{

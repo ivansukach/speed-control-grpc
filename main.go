@@ -25,7 +25,7 @@ func main() {
 	sls := service.New(rps)
 	srv := server.New(sls)
 	s := grpc.NewServer()
-	protocol.RegisterBookServiceServer(s, srv)
+	protocol.RegisterSpeedControlServiceServer(s, srv)
 	listener, err := net.Listen("tcp", ":1323")
 	if err != nil {
 		log.Error(err)

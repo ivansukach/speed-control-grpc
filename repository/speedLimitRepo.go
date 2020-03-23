@@ -20,7 +20,7 @@ type speedLimitRepository struct {
 }
 
 func (slr *speedLimitRepository) Create(record *Record) error {
-	str := fmt.Sprintf("%d %s %f\n", record.Date, record.Number, record.Speed)
+	str := fmt.Sprintf("%s | %s | %f\n", record.Date, record.Number, record.Speed)
 	_, err := slr.file.WriteString(str)
 	return err
 

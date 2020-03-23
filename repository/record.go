@@ -1,7 +1,7 @@
 package repository
 
 type Record struct {
-	Date   int64
+	Date   string
 	Number string
 	Speed  float32
 }
