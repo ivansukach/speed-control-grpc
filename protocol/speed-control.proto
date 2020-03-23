@@ -28,7 +28,7 @@ message GetMinMaxRequest{
     int64 date = 1;
 }
 
-service BookService{
+service SpeedControlService{
     rpc Add(AddRequest) returns(EmptyResponse);
     rpc Listing(ListingRequest) returns(ListingResponse);
     rpc GetMinMax(GetMinMaxRequest) returns(GetMinMaxResponse);
