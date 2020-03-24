@@ -17,7 +17,7 @@ func (sls *SpeedLimitService) Create(record *repository.Record) error {
 //	return sls.r.Update(book)
 //}
 func (sls *SpeedLimitService) GetMinMax(date string) (*repository.Record, *repository.Record, error) {
-	records, err := sls.r.Listing()
+	records, err := sls.r.Listing(date)
 	if err != nil {
 		log.Error(err)
 		return nil, nil, err
@@ -40,7 +40,7 @@ func (sls *SpeedLimitService) GetMinMax(date string) (*repository.Record, *repos
 	return &(*records)[indexOfMin], &(*records)[indexOfMax], nil
 }
 func (sls *SpeedLimitService) Listing(date string, speedLimit float32) (*[]repository.Record, error) {
-	records, err := sls.r.Listing()
+	records, err := sls.r.Listing(date)
 	if err != nil {
 		log.Error(err)
 		return nil, err

@@ -7,6 +7,7 @@ type Record struct {
 }
 type Repository interface {
 	Create(record *Record) error
+	//ControlTime()
 	//GetMinMax(date int64) (*Record, error)
-	Listing() (*[]Record, error)
+	Listing(date string) (*[]Record, error)
 }
