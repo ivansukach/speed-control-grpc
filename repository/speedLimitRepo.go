@@ -8,22 +8,50 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func New() Repository {
-	config.Load()
-	return &speedLimitRepository{}
+	cfg := config.Load()
+	return &speedLimitRepository{cfg: &cfg}
 }
 
 type speedLimitRepository struct {
+	cfg *config.Config
 }
 
+func (slr *speedLimitRepository) CreateFile(fileName string) *os.File {
+	log.Info("Creating new .txt file: " + fileName + " with specified access")
+	file, err := os.Create(fileName)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	//mtime := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(),
+	//	slr.cfg.EndAccessHour, slr.cfg.EndAccessMinute, slr.cfg.EndAccessSecond, 0, time.Local)
+	mtime := time.Now().Add(1 * time.Minute)
+	log.Println("Modification to:", mtime)
+	//atime := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(),
+	//	slr.cfg.EndAccessHour, slr.cfg.EndAccessMinute, slr.cfg.EndAccessSecond, 0, time.Local)
+	atime := time.Now().Add(2 * time.Minute)
+	log.Println("Access to:", atime)
+	if err := os.Chtimes(fileName, atime, mtime); err != nil {
+		log.Fatal(err)
+	}
+	//Why it doesn't limit access to file?
+	return file
+}
 func (slr *speedLimitRepository) Create(record *Record) error {
 	str := fmt.Sprintf("%s | %s | %f\n", record.Date, record.Number, record.Speed)
 	onlyDate := strings.Split(record.Date, " ")[0]
-	file, err := os.OpenFile(onlyDate+".txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
+	file, err := os.OpenFile(onlyDate+".txt", os.O_RDWR|os.O_APPEND, 0755)
 	if err != nil {
-		log.Fatal(err)
+		if os.IsNotExist(err) {
+			file = slr.CreateFile(onlyDate + ".txt")
+		} else {
+			log.Fatal(err)
+		}
+
 	}
 	_, err = file.WriteString(str)
 	defer file.Close()
