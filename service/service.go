@@ -12,10 +12,6 @@ type SpeedLimitService struct {
 func (sls *SpeedLimitService) Create(record *repository.Record) error {
 	return sls.r.Create(record)
 }
-
-//func (sls *SpeedLimitService) Update(book *repositories.Book) error {
-//	return sls.r.Update(book)
-//}
 func (sls *SpeedLimitService) GetMinMax(date string) (*repository.Record, *repository.Record, error) {
 	records, err := sls.r.Listing(date)
 	if err != nil {
@@ -54,9 +50,6 @@ func (sls *SpeedLimitService) Listing(date string, speedLimit float32) (*[]repos
 	return &selectionResult, nil
 }
 
-//func (sls *SpeedLimitService) Delete(id string) error {
-//	return sls.r.Delete(id)
-//}
 func New(repo repository.Repository) *SpeedLimitService {
 	return &SpeedLimitService{r: repo}
 }

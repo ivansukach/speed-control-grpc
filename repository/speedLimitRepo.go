@@ -13,32 +13,7 @@ func New() Repository {
 	return &speedLimitRepository{}
 }
 
-//func (slr *speedLimitRepository) ControlTime(){
-//	for{
-//		latestDate, err:=time.Parse("02.01.2006", timeFunc.FormatTimeOnlyDate(time.Now()))
-//		if err!=nil{
-//			log.Fatal(err)
-//		}
-//		log.Println(latestDate)
-//		if time.Now().Before(latestDate.Add(24*time.Hour)) {
-//			difference:=latestDate.Add(24*time.Hour).Unix()-time.Now().Unix()-1
-//			log.Println("difference: ", difference)
-//			time.Sleep(time.Duration(difference)*time.Second)
-//		} else{
-//			newDate := timeFunc.FormatTimeOnlyDate(time.Now())
-//			newFile, err := os.Create(newDate + ".txt")
-//			if err != nil {
-//				log.Fatal(err)
-//			}
-//			slr.file = newFile
-//			log.Println("New File: "+newDate+".txt")
-//
-//		}
-//	}
-//}
-
 type speedLimitRepository struct {
-	//file *os.File
 }
 
 func (slr *speedLimitRepository) Create(record *Record) error {
@@ -88,19 +63,3 @@ func (slr *speedLimitRepository) Listing(date string) (*[]Record, error) {
 
 	return &records, nil
 }
-
-//func (slr *speedLimitRepository) GetMinMax(date int64) (*Record, error) {
-//	data := make([]byte, 64)
-//
-//	for{
-//		n, err := slr.file.Read(data)
-//		if err == io.EOF{   // если конец файла
-//			break           // выходим из цикла
-//		}else if err!=nil{
-//			return nil, err
-//		}
-//		fmt.Print(string(data[:n]))
-//	}
-//	record:=Record{}
-//	return &record, nil
-//}
