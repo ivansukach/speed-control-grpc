@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"github.com/ivansukach/speed-control-grpc/config"
 	log "github.com/sirupsen/logrus"
 	"io"
 	"os"
@@ -10,6 +11,7 @@ import (
 )
 
 func New() Repository {
+	config.Load()
 	return &speedLimitRepository{}
 }
 
